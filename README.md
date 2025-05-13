@@ -62,7 +62,13 @@ Iniciar el contenedor Docker (MySQL Maestro)
     cron – Configuración de la tarea cron que ejecuta el script automáticamente.
 
     /Backups – Carpeta en la NAS donde se almacenan los archivos .sql generados.
-🔒 Credenciales de ejemplo
+
+
+
+
+# 🔒 Credenciales 
+
+
 
     Ubuntu Server 22.04
 
@@ -92,3 +98,9 @@ Esclavo (Instalado en Ubuntu host)
 Usuario: root
 Contraseña: password
 
+
+
+
+# Link de ddescarga de los .OVA's
+
+https://mega.nz/file/WMUR0JrZ#-MnLdN1pVIv0mgGKW4jQUFRSX1txKsEy_RVWY1YMp4w
