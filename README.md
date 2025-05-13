@@ -24,24 +24,22 @@
 
 🛠️ Puesta en marcha del sistema
 
-Una vez configurado todo, sigue estos pasos para iniciar el sistema correctamente:
-🔌 Iniciar servicios necesarios
+# 🔌 Iniciar MySQL (esclavo en Ubuntu host)
 
-# Iniciar MySQL (esclavo en Ubuntu host)
-sudo systemctl start mysql
+- sudo systemctl start mysql
 
-# Iniciar el servicio de cron (para ejecutar backups automáticamente)
-sudo systemctl start cron
+# 🔌 Iniciar el servicio de cron (para ejecutar backups automáticamente)
 
-🐳 Iniciar el contenedor Docker (MySQL Maestro)
+- sudo systemctl start cron
 
-# Iniciar el contenedor MySQL maestro
-sudo docker start mysql-master
+# 🐳 Iniciar el contenedor MySQL maestro
+Iniciar el contenedor Docker (MySQL Maestro)
 
-# Acceder al contenedor MySQL maestro
-sudo docker exec -it mysql-master mysql -u root -p
-# (te pedirá la contraseña, en este ejemplo: password)
+- sudo docker start mysql-master
 
+# ⚙️ Acceder al contenedor MySQL maestro
+
+- sudo docker exec -it mysql-master mysql -u root -p
 
 ⚙️ Tecnologías utilizadas
 
