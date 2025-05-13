@@ -24,22 +24,27 @@
 
 🛠️ Puesta en marcha del sistema
 
+
 # 🔌 Iniciar MySQL (esclavo en Ubuntu host)
 
 - sudo systemctl start mysql
 
+
 # 🔌 Iniciar el servicio de cron (para ejecutar backups automáticamente)
 
 - sudo systemctl start cron
+
 
 # 🐳 Iniciar el contenedor MySQL maestro
 Iniciar el contenedor Docker (MySQL Maestro)
 
 - sudo docker start mysql-master
 
+
 # ⚙️ Acceder al contenedor MySQL maestro
 
 - sudo docker exec -it mysql-master mysql -u root -p
+
 
 ⚙️ Tecnologías utilizadas
 
@@ -55,6 +60,8 @@ Iniciar el contenedor Docker (MySQL Maestro)
 
     cron – Utilizado para ejecutar tareas automáticas programadas (backups).
 
+
+
 📁 Estructura general
 
     backup.sh – Script que realiza el dump de la base de datos MySQL esclavo y lo envía vía FTP a la NAS.
@@ -62,7 +69,6 @@ Iniciar el contenedor Docker (MySQL Maestro)
     cron – Configuración de la tarea cron que ejecuta el script automáticamente.
 
     /Backups – Carpeta en la NAS donde se almacenan los archivos .sql generados.
-
 
 
 
@@ -101,6 +107,6 @@ Contraseña: password
 
 
 
-# Link de ddescarga de los .OVA's
+# Link de descarga de los .OVA's
 
 https://mega.nz/file/WMUR0JrZ#-MnLdN1pVIv0mgGKW4jQUFRSX1txKsEy_RVWY1YMp4w
