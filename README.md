@@ -1,5 +1,5 @@
+🧩 System Architecture
 
-🧩 Arquitectura del sistema
 ```text
 +=====================================================================================+
 |                                      VIRTUALBOX                                     |
@@ -8,13 +8,13 @@
 |  +-------------------------+           FTP           +---------------------------+  |
 |  |   Ubuntu Server 22.04   |  -------------------->  |         TrueNAS           |  |
 |  |-------------------------|                         |---------------------------|  |
-|  | - MySQL Esclavo         |                         | - Carpeta: /Backups       |  |
-|  | - Script de backup.sh   |                         | - Discos en espejo (RAID) |  |
+|  | - MySQL Slave           |                         | - Folder: /Backups       |  |
+|  | - backup.sh Script      |                         | - Mirrored Disks (RAID)  |  |
 |  | - Cronjob               |                         +---------------------------+  |
-|  |                         |                                                        |
-|  |   +------------------+  |                                                        | 
-|  |   |   Docker         |  |                                                        |
-|  |   |   Container      |  |                                                        |
+|  |                         |                                                        | 
+|  |   +------------------+  |                                                        |
+|  |   |      Docker      |  |                                                        |
+|  |   |    Container     |  |                                                        |
 |  |   |   mysql-master   |  |                                                        |
 |  |   +------------------+  |                                                        |
 |  +-------------------------+                                                        |
@@ -22,91 +22,86 @@
 +=====================================================================================+
 ```
 
-🛠️ Puesta en marcha del sistema
+🛠️ System Startup
 
+# 🔌 Start MySQL (Slave on Ubuntu Host)
 
-# 🔌 Iniciar MySQL (esclavo en Ubuntu host)
+* sudo systemctl start mysql
 
-- sudo systemctl start mysql
+# 🔌 Start the Cron Service (to execute backups automatically)
 
+* sudo systemctl start cron
 
-# 🔌 Iniciar el servicio de cron (para ejecutar backups automáticamente)
+# 🐳 Start the MySQL Master Container
 
-- sudo systemctl start cron
+Start the Docker container running the MySQL Master:
 
+* sudo docker start mysql-master
 
-# 🐳 Iniciar el contenedor MySQL maestro
-Iniciar el contenedor Docker (MySQL Maestro)
+# ⚙️ Access the MySQL Master Container
 
-- sudo docker start mysql-master
+* sudo docker exec -it mysql-master mysql -u root -p
 
+⚙️ Technologies Used
 
-# ⚙️ Acceder al contenedor MySQL maestro
+```
+Ubuntu Server 22.04 – Base operating system and execution environment.
 
-- sudo docker exec -it mysql-master mysql -u root -p
+MySQL 8.x (Master in Docker, Slave on Host) – Database management system.
 
+Docker – Used to containerize the MySQL Master server (mysql-master).
 
-⚙️ Tecnologías utilizadas
+TrueNAS – NAS with mirrored disks for secure backup storage.
 
-    Ubuntu Server 22.04 – Sistema base y entorno de ejecución.
+FTP – Protocol used to transfer backups from Ubuntu to TrueNAS.
 
-    MySQL 8.x (Maestro en Docker, Esclavo en Host) – Sistema de gestión de bases de datos.
+cron – Used to execute scheduled tasks automatically (backups).
+```
 
-    Docker – Para contenerizar el servidor MySQL maestro (mysql-master).
+📁 General Structure
 
-    TrueNAS – NAS con discos en espejo para almacenamiento seguro de backups.
+```
+backup.sh – Script that creates a dump of the MySQL Slave database and sends it via FTP to the NAS.
 
-    FTP – Protocolo usado para transferir backups desde Ubuntu hacia TrueNAS.
+cron – Cron configuration used to execute the backup script automatically.
 
-    cron – Utilizado para ejecutar tareas automáticas programadas (backups).
+/Backups – Folder on the NAS where the generated .sql files are stored.
+```
 
+# 🔒 Credentials
 
+```
+Ubuntu Server 22.04
+```
 
-📁 Estructura general
-
-    backup.sh – Script que realiza el dump de la base de datos MySQL esclavo y lo envía vía FTP a la NAS.
-
-    cron – Configuración de la tarea cron que ejecuta el script automáticamente.
-
-    /Backups – Carpeta en la NAS donde se almacenan los archivos .sql generados.
-
-
-
-# 🔒 Credenciales 
-
-
-
-    Ubuntu Server 22.04
-
-Usuario: whu
-Contraseña: password
+Username: whu
+Password: password
 
 NAS (TrueNAS)
 
-Usuario: truenas_admin
-Contraseña: password
-Ruta FTP: /Backups
+Username: truenas_admin
+Password: password
+FTP Path: /Backups
 
-FTP desde Ubuntu hacia NAS
+FTP from Ubuntu to NAS
 
-Usuario: whu
-Contraseña: passwordwhu
+Username: whu
+Password: passwordwhu
 
 MySQL
 
-    Maestro (Docker container mysql-master)
+```
+Master (Docker container mysql-master)
+```
 
-Usuario: root
-Contraseña: password
+Username: root
+Password: password
 
-Esclavo (Instalado en Ubuntu host)
+Slave (Installed on Ubuntu Host)
 
-Usuario: root
-Contraseña: password
+Username: root
+Password: password
 
-
-
-
-# Link de descarga de los .OVA's
+# OVA Download Link
 
 https://mega.nz/file/WMUR0JrZ#-MnLdN1pVIv0mgGKW4jQUFRSX1txKsEy_RVWY1YMp4w
